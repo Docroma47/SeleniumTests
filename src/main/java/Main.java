@@ -7,47 +7,43 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+    static WebDriver driver;
+
     public static void main(String[] args) {
         System.setProperty("webdriver.gecko.driver", "A:\\Proj\\TestSelenium\\drivers\\geckodriver.exe");
 
-        WebDriver driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
-        driver.get("http://en.wikipedia.org");
+        driver.get("https://market.yandex.ru/catalog");
+        driver.findElement(By.xpath("//span[text()=\"Бытовая техника\"]")).click();
+        driver.findElement(By.xpath("//a [@href=\"/catalog--posudomoechnye-mashiny/54956/list?hid=90584\"]")).click();
 
-        WebElement link = driver.findElement(By.xpath("//li[@id=\"n-aboutsite\"]/a"));
-        System.out.println(link.getText());
-        link.click();
+        selectCheckBox("promo-type_discount");
+        selectCheckBox("promo-type_promo-code");
+        selectCheckBox("good-state_cutprice");
+        selectCheckBox("credit-type_installment");
 
-//        driver.findElement(By.xpath("//*[@id='searchInput']")).sendKeys(new String[]{"Selenium Webdriver"});
-//        driver.findElement(By.xpath("//*[@id='searchButton']")).click();
-//        System.out.println(driver.findElement(By.xpath("//*[@id='ooui-php-1']")).getAttribute("Value"));
-//        driver.findElement(By.xpath("//*[@id='ooui-php-1']")).clear();
-//
-        driver.get("https://github.com");
-        driver.findElement(By.xpath("//li[@class='border-bottom border-lg-bottom-0 mr-0 mr-lg-3']/a")).click();
+        deselectCheckBox("promo-type_promo-code");
 
-//        driver.findElement(By.xpath("//*[@id=\"user[login]\"]")).sendKeys(new String[]{"testusername"});
-//        driver.findElement(By.xpath("//*[@id=\"user[password]\"]")).sendKeys(new String[]{"testpass"});
-//        WebElement button = driver.findElement(By.xpath("/html/body/div[4]/main/div[1]/div/div/div[2]/div[1]/form/button"));
-//        button.submit();
 
-//        WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
-//        if (button.getText().equals("Sign up for GitHub")) System.out.println("Success!");
-//        else System.out.println("Fail!");
-////        button.submit();
-////        driver.quit();
-//
-//        driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/div[2]/a[1]")).click();
-//
-        driver.get("https://www.facebook.com");
-        driver.findElement(By.xpath("//td[@class=\"login_form_label_field\"]/div/a")).click();
-//        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys(new String[]{"testName"});
-//        driver.findElement(By.xpath("//*[@id=\"pass\"]")).sendKeys(new String[]{"testPassword"});
-//        WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"u_0_b\"]"));
-//        logInButton.submit();
-//        System.out.println("Your eMail is: " + driver.findElement(By.xpath("//*[@autocomplete='username']")).getAttribute("Value"));
+    }
+
+    public static void selectCheckBox(String name) {
+        String rbXpath = "//label[@for='%s']//span";
+        String inputXpath = "//input[@id='%s']";
+
+        if (!driver.findElement(By.xpath(String.format(inputXpath, name))).isSelected())
+            driver.findElement(By.xpath(String.format(rbXpath, name))).click();
+    }
+
+    public static void deselectCheckBox(String name){
+        String rbXpath = "//label[@for='%s']//span";
+        String inputXpath = "//input[@id='%s']";
+
+        if (driver.findElement(By.xpath(String.format(inputXpath, name))).isSelected())
+            driver.findElement(By.xpath(String.format(rbXpath, name))).click();
     }
 
 }

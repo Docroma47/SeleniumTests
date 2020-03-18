@@ -11,23 +11,35 @@ public class Main {
         System.setProperty("webdriver.gecko.driver", "A:\\Proj\\TestSelenium\\drivers\\geckodriver.exe");
 
         WebDriver driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
         driver.get("http://en.wikipedia.org");
-        driver.findElement(By.xpath("//*[@id=\"searchButton\"]")).click();
+        driver.findElement(By.xpath("//*[@id='searchInput']")).sendKeys(new String[]{"Selenium Webdriver"});
+        driver.findElement(By.xpath("//*[@id='searchButton']")).click();
+        System.out.println(driver.findElement(By.xpath("//*[@id='ooui-php-1']")).getAttribute("Value"));
+        driver.findElement(By.xpath("//*[@id='ooui-php-1']")).clear();
 
         driver.get("https://github.com");
-        WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
-        if (button.getText().equals("Sign up for GitHub")) System.out.println("Success!");
-        else System.out.println("Fail!");
-//        button.submit();
-//        driver.quit();
+        driver.findElement(By.xpath("//*[@id=\"user[login]\"]")).sendKeys(new String[]{"testusername"});
+        driver.findElement(By.xpath("//*[@id=\"user[password]\"]")).sendKeys(new String[]{"testpass"});
+        WebElement button = driver.findElement(By.xpath("/html/body/div[4]/main/div[1]/div/div/div[2]/div[1]/form/button"));
+        button.submit();
 
-        driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/div[2]/a[1]")).click();
-
+//        WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
+//        if (button.getText().equals("Sign up for GitHub")) System.out.println("Success!");
+//        else System.out.println("Fail!");
+////        button.submit();
+////        driver.quit();
+//
+//        driver.findElement(By.xpath("/html/body/div[1]/header/div/div[2]/div[2]/a[1]")).click();
+//
         driver.get("https://www.facebook.com/");
-        driver.findElement(By.xpath("//button[@type='submit']")).click();//submit not a worked
+        driver.findElement(By.xpath("//*[@id=\"email\"]")).sendKeys(new String[]{"testName"});
+        driver.findElement(By.xpath("//*[@id=\"pass\"]")).sendKeys(new String[]{"testPassword"});
+        WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"u_0_b\"]"));
+        logInButton.submit();
+        System.out.println("Your eMail is: " + driver.findElement(By.xpath("//*[@autocomplete='username']")).getAttribute("Value"));
     }
 
 }

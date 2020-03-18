@@ -16,34 +16,33 @@ public class Main {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
-        driver.get("https://market.yandex.ru/catalog");
-        driver.findElement(By.xpath("//span[text()=\"Бытовая техника\"]")).click();
-        driver.findElement(By.xpath("//a [@href=\"/catalog--posudomoechnye-mashiny/54956/list?hid=90584\"]")).click();
-
-        selectCheckBox("promo-type_discount");
-        selectCheckBox("promo-type_promo-code");
-        selectCheckBox("good-state_cutprice");
-        selectCheckBox("credit-type_installment");
-
-        deselectCheckBox("promo-type_promo-code");
+        driver.get("https://vk.com/");//ij_bmonth//ij_byear//ij_bday
+        selectCheckBox("bday", "2");
+        selectCheckBox("bmonth", "3");
+        selectCheckBox("byear", "4");
 
 
     }
 
-    public static void selectCheckBox(String name) {
-        String rbXpath = "//label[@for='%s']//span";
-        String inputXpath = "//input[@id='%s']";
+    public static void selectCheckBox(String name, String option) {
+        String t = null;
+        switch (name) {
+            case "bday":
+                t = "1";
+                break;
+            case "bmonth":
+                t = "2";
+                break;
+            case "byear":
+                t = "3";
+                break;
+        }
 
-        if (!driver.findElement(By.xpath(String.format(inputXpath, name))).isSelected())
-            driver.findElement(By.xpath(String.format(rbXpath, name))).click();
-    }
+        String rbXpath = String.format("//div [@class=\"ij_%s\"]", name);
+        String inputXpath = String.format("//li[@id=\"option_list_options_container_" + t + "_%s\"]", option);
 
-    public static void deselectCheckBox(String name){
-        String rbXpath = "//label[@for='%s']//span";
-        String inputXpath = "//input[@id='%s']";
-
-        if (driver.findElement(By.xpath(String.format(inputXpath, name))).isSelected())
-            driver.findElement(By.xpath(String.format(rbXpath, name))).click();
+        driver.findElement(By.xpath(rbXpath)).click();
+        driver.findElement(By.xpath(inputXpath)).click();
     }
 
 }

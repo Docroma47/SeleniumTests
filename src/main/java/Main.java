@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
@@ -16,33 +17,14 @@ public class Main {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
-        driver.get("https://vk.com/");//ij_bmonth//ij_byear//ij_bday
-        selectCheckBox("bday", "2");
-        selectCheckBox("bmonth", "3");
-        selectCheckBox("byear", "4");
+        driver.get("https://market.yandex.ru/catalog--posudomoechnye-mashiny/54956/list?hid=90584&local-offers-first=0&onstock=1");//ij_bmonth//ij_byear//ij_bday
+        List<WebElement> checkBoxes = driver.findElements(By.xpath("//div[@class=\"search-layout\"]//div[@data-zone-name=\"search-filters-aside\"]//fieldset [@data-autotest-id=\"7893318\"]//span"));
+//        checkBoxes.get(3).click();
+//        System.out.println(checkBoxes.size());
+        if (checkBoxes.size() == 12) System.out.println("It's okay!");
+        else System.out.println("Fail!");
 
-
-    }
-
-    public static void selectCheckBox(String name, String option) {
-        String t = null;
-        switch (name) {
-            case "bday":
-                t = "1";
-                break;
-            case "bmonth":
-                t = "2";
-                break;
-            case "byear":
-                t = "3";
-                break;
-        }
-
-        String rbXpath = String.format("//div [@class=\"ij_%s\"]", name);
-        String inputXpath = String.format("//li[@id=\"option_list_options_container_" + t + "_%s\"]", option);
-
-        driver.findElement(By.xpath(rbXpath)).click();
-        driver.findElement(By.xpath(inputXpath)).click();
+        for (WebElement checkBox: checkBoxes) checkBox.click();
     }
 
 }

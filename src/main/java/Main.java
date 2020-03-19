@@ -34,34 +34,13 @@ public class Main {
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        driver.get("https://en.wikipedia.org");
 
-        WebElement searchInput = driver.findElement(By.xpath("//*[@id=\"searchInput\"]"));
-
-        String select = Keys.chord(Keys.CONTROL, "a");
-        String cut = Keys.chord(Keys.CONTROL, "x");
-        String paste = Keys.chord(Keys.CONTROL, "v");
-        Thread.sleep(2000);
-        searchInput.sendKeys(Keys.chord(Keys.SHIFT, "test"));
-        Thread.sleep(2000);
-        searchInput.sendKeys(select);
-        Thread.sleep(2000);
-        searchInput.sendKeys(cut);
-        Thread.sleep(2000);
-        searchInput.sendKeys(paste);
-
-        File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-
-        Date dateNow = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("hh_mm_ss");
-        String fileName = format.format(dateNow) + ".png";
-        try {
-            FileUtils.copyFile(screenshot, new File("A:\\Proj\\User\\screenShots\\" + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        driver.quit();
+        driver.get("https://images.google.com/");
+        ////input[@type='file'] ////div[@aria-label="Поиск по картинке"]/span
+        driver.findElement(By.xpath("//div[@aria-label=\"Поиск по картинке\"]/span")).click();
+        driver.findElement(By.xpath("//a[text()='Загрузить файл']")).click();
+        driver.findElement(By.xpath("//input[@type='file']")).sendKeys("A:\\Proj\\User\\screenShots\\screen.png");
+//        driver.quit();
     }
 
 }

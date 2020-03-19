@@ -1,4 +1,5 @@
 import net.bytebuddy.implementation.bytecode.Throw;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -7,6 +8,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,6 +49,19 @@ public class Main {
         searchInput.sendKeys(cut);
         Thread.sleep(2000);
         searchInput.sendKeys(paste);
+
+        File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+        Date dateNow = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("hh_mm_ss");
+        String fileName = format.format(dateNow) + ".png";
+        try {
+            FileUtils.copyFile(screenshot, new File("A:\\Proj\\User\\screenShots\\" + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        driver.quit();
     }
 
 }

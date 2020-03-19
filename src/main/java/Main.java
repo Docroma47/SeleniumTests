@@ -1,3 +1,4 @@
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -8,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class Main {
     static WebDriver driver;
@@ -26,14 +29,21 @@ public class Main {
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        driver.get("https://twitter.com/");
+        driver.get("https://en.wikipedia.org");
 
+        WebElement searchInput = driver.findElement(By.xpath("//*[@id=\"searchInput\"]"));
 
-        if (driver.findElements(By.xpath("//span[text()='Registration']")).size() > 0) {
-            System.out.println("Such element is presented");
-        } else {
-            System.out.println("Cannot find such element");
-        }
+        String select = Keys.chord(Keys.CONTROL, "a");
+        String cut = Keys.chord(Keys.CONTROL, "x");
+        String paste = Keys.chord(Keys.CONTROL, "v");
+        Thread.sleep(2000);
+        searchInput.sendKeys(Keys.chord(Keys.SHIFT, "test"));
+        Thread.sleep(2000);
+        searchInput.sendKeys(select);
+        Thread.sleep(2000);
+        searchInput.sendKeys(cut);
+        Thread.sleep(2000);
+        searchInput.sendKeys(paste);
     }
 
 }

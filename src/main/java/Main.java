@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-//    static WebDriver driver;
+    static WebDriver driver;
     static WebDriver driverChrome;
 //    static WebDriverWait wait;
 //    static WebDriverWait wait2;
 
-    public static void main(String[] args) {
-//        System.setProperty("webdriver.gecko.driver", "A:\\Proj\\TestSelenium\\drivers\\geckodriver.exe");
+    public static void main(String[] args) throws InterruptedException {
+        System.setProperty("webdriver.gecko.driver", "A:\\Proj\\TestSelenium\\drivers\\geckodriver.exe");
         System.setProperty("webdriver.chrome.driver", "A:\\Proj\\TestSelenium\\drivers\\chromedriver.exe");
 
 //        driver = new FirefoxDriver();
@@ -26,16 +26,17 @@ public class Main {
 
         driverChrome.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driverChrome.manage().window().maximize();
-        driverChrome.get("https://en.wikipedia.org");
-        JavascriptExecutor js = (JavascriptExecutor)driverChrome;
-        js.executeScript("confirm('Are you sure?');");
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        driverChrome.switchTo().alert().accept();
+        driverChrome.get("https://mail.ru");
+        String mainWindow = driverChrome.getWindowHandle();
+        Thread.sleep(3000);
+        driverChrome.findElement(By.xpath("//*[@id=\"signup\"]")).click();
+//        for (String windowHandle: driverChrome.getWindowHandles()) driverChrome.switchTo().window(windowHandle);
+        Thread.sleep(3000);
+        driverChrome.switchTo().window(mainWindow);
+        Thread.sleep(3000);
+        driverChrome.findElement(By.xpath("//div[@class=\"tabs\"]//a[text()='Санкт-Петербург']")).click();
+
+
 
 //        driverChrome.quit();
     }

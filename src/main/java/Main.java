@@ -17,14 +17,18 @@ public class Main {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
-        driver.get("https://market.yandex.ru/catalog--posudomoechnye-mashiny/54956/list?hid=90584&local-offers-first=0&onstock=1");//ij_bmonth//ij_byear//ij_bday
-        List<WebElement> checkBoxes = driver.findElements(By.xpath("//div[@class=\"search-layout\"]//div[@data-zone-name=\"search-filters-aside\"]//fieldset [@data-autotest-id=\"7893318\"]//span"));
-//        checkBoxes.get(3).click();
-//        System.out.println(checkBoxes.size());
-        if (checkBoxes.size() == 12) System.out.println("It's okay!");
-        else System.out.println("Fail!");
+        driver.get("https://www.w3schools.com/html/html_tables.asp");//ij_bmonth//ij_byear//ij_bday
+        WebElement tableElement = driver.findElement(By.xpath("//*[@id=\"customers\"]"));
+        Table table = new Table(tableElement, driver);
+        System.out.println("Rows number is: " + table.getRows().size());
+        System.out.println(table.getValueFromCell(2, 3));
+        System.out.println(table.getValueFromCell(4, 1));
 
-        for (WebElement checkBox: checkBoxes) checkBox.click();
+        System.out.println(table.getValueFromCell(4,"Company"));
+        System.out.println(table.getValueFromCell(1,"Country"));
+        System.out.println(table.getValueFromCell(2,"Contact"));
+
+        driver.quit();
     }
 
 }

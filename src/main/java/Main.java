@@ -24,21 +24,38 @@ public class Main {
 //        wait  = (new WebDriverWait(driver, 5));
 //        wait2  = (new WebDriverWait(driver, 10));
 
-        driverChrome.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driverChrome.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driverChrome.manage().window().maximize();
-        driverChrome.get("https://mail.ru");
-        String mainWindow = driverChrome.getWindowHandle();
-        Thread.sleep(3000);
-        driverChrome.findElement(By.xpath("//*[@id=\"signup\"]")).click();
-//        for (String windowHandle: driverChrome.getWindowHandles()) driverChrome.switchTo().window(windowHandle);
-        Thread.sleep(3000);
-        driverChrome.switchTo().window(mainWindow);
-        Thread.sleep(3000);
-        driverChrome.findElement(By.xpath("//div[@class=\"tabs\"]//a[text()='Санкт-Петербург']")).click();
+//        driverChrome.get("https://basicweb.ru/html/primer/41a.php");
+//        WebElement buttom1 = driverChrome.findElement(By.xpath("//button[text()='Элемент отключен']"));
+//        WebElement buttom2 = driverChrome.findElement(By.xpath("//button[text()='Элемент активен']"));
+//
+//        System.out.println(buttom1.isEnabled());
+//        System.out.println(buttom2.isEnabled());
+//
+//        if (buttom1.isEnabled()) driverChrome.get("https://mail.ru");
+//        if (buttom2.isEnabled()) driverChrome.get("https://account.mail.ru/signup?from=main&rf=auth.mail.ru");
+//        WebElement radioBut = driverChrome.findElement(By.xpath("//label[@data-test-id=\"gender-male\"]//input"));
+//        WebElement radioBut2 = driverChrome.findElement(By.xpath("//label[@data-test-id=\"gender-female\"]//input"));
+//
+//        if (!(radioBut.isSelected())) {
+//            driverChrome.findElement(By.xpath("//label[@data-test-id=\"gender-male\"]//span")).click();
+//        }
+//
+//        if (radioBut2.isSelected()) {
+//            System.out.println("WAAAT?!");
+//        }
+        driverChrome.get("http://ebay.com");
 
+        WebElement link1 = driverChrome.findElement(By.xpath("//a[text()='Samsung']"));
+        WebElement link2 = driverChrome.findElement(By.xpath("//li[@class=\"hl-cat-nav__js-tab\"]//a[text()='Мода']"));
 
+        System.out.println(link1.isDisplayed());
+        System.out.println(link2.isDisplayed());
 
-//        driverChrome.quit();
+        if (link1.isDisplayed()) link1.click();
+        else link2.click();
+
     }
 
 }

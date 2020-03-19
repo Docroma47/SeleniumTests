@@ -27,11 +27,15 @@ public class Main {
         driverChrome.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driverChrome.manage().window().maximize();
         driverChrome.get("https://en.wikipedia.org");
-
-        JavascriptExecutor jse = (JavascriptExecutor)driverChrome;
-//        jse.executeScript("alert('Hello World!');");
-        jse.executeScript("window.scrollBy(0, 1000)", "");
-        jse.executeScript("window.scrollBy(0, -500)", "");
+        JavascriptExecutor js = (JavascriptExecutor)driverChrome;
+        js.executeScript("confirm('Are you sure?');");
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        driverChrome.switchTo().alert().accept();
 
 //        driverChrome.quit();
     }
